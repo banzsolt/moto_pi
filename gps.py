@@ -4,6 +4,7 @@
 from __future__ import print_function
 import serial, io
 import nmea
+import speed
 
 addr  = '/dev/ttyUSB0'  # serial port to read data from
 baud  = 4800            # baud rate for serial port
@@ -15,6 +16,8 @@ with serial.Serial(addr,baud) as pt, open(fname,fmode) as outf:
         encoding='ascii', errors='ignore', newline='\r',line_buffering=True)
     spb.readline()  # throw away first line; likely to start mid-sentence (incomplete)
     reader = nmea.NMEA0183()
+    translator = speed.Translator()
+    translator.parse(21)
     while (1):
         x = spb.readline()  # read one line of text from serial port
         print (x,end='')    # echo line of text on-screen
