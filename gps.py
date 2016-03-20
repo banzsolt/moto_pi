@@ -17,7 +17,6 @@ with serial.Serial(addr,baud) as pt, open(fname,fmode) as outf:
     spb.readline()  # throw away first line; likely to start mid-sentence (incomplete)
     reader = nmea.NMEA0183()
     translator = speed.Translator()
-    translator.parse(21)
     while (1):
         x = spb.readline()  # read one line of text from serial port
         print (x,end='')    # echo line of text on-screen
@@ -25,4 +24,5 @@ with serial.Serial(addr,baud) as pt, open(fname,fmode) as outf:
         outf.flush()        # make sure it actually gets written out
         reader.data = x
         reader.process()
+        translator.parse(int(reader.data_gps['speed']))
         print(reader.data_gps)

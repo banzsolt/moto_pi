@@ -14,6 +14,10 @@ class Translator:
             GPIO.setup(pin, GPIO.OUT)
 
     def parse(self, number):
+        for pin in self._tens:
+            GPIO.output(pin, GPIO.LOW)
+        for pin in self._lastDigits:
+            GPIO.output(pin, GPIO.LOW)
         for x in range(0, number % 10):
             GPIO.output(self._lastDigits[x], GPIO.HIGH)
         for x in range(0, number / 10):
