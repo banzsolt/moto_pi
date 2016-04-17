@@ -20,7 +20,7 @@ class NMEA0183():
             if information[2] != 'A':
                 print('NO DATA!')
                 return False
-            self.data_gps['utc'] = self.gps_nmea2utc(information[1])
+            self.data_gps['utc'] = self.gps_nmea2utc(information)
             self.data_gps['lat'] = information[3][0:2] + '.' + str(float(information[3][2:9]) * 100 / 60)\
                 .replace('.', '')
             self.data_gps['lon'] = information[5][0:3] + '.' + str(float(information[5][3:10]) * 100 / 60)\
